@@ -4,12 +4,6 @@ import {Value} from "../../main/value/Value"
 
 describe('Value', () => {
 
-  it('narrows the value', () => {
-    const valueStr: Value<String> = createValue("value");
-    const valueAny: Value<any> = Value.narrow(valueStr);
-    expect(valueAny.get()).to.equal(valueStr.get());
-  });
-
   it('checks that if an element matches a given predicate "exists" returns true', () => {
     const value: Value<String> = createValue("value");
     expect(value.exists((s: String) => s == "value")).to.equal(true);
