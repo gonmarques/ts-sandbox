@@ -1,27 +1,46 @@
 import 'mocha';
+import * as sinon from 'sinon';
 import {expect} from "chai";
 import {Value} from "../../main/value/Value"
 
 describe('Value', () => {
 
-  it('checks that if an element matches a given predicate "exists" returns true', () => {
+  it('if an element matches a given predicate "exists" returns true', () => {
     const value: Value<Person> = createValue(new Person("John"));
     expect(value.exists(p => p.name == "John")).to.equal(true);
   });
 
-  it('checks that if no element matches a given predicate "exists" returns false', () => {
+  it('if no element matches a given predicate "exists" returns false', () => {
     const value: Value<Person> = createValue(new Person("John"));
     expect(value.exists(p => p.name == "Peter")).to.equal(false);
   });
 
-  it('checks if a value is contained', () => {
+  it('if all elements match a given predicate "forAll" returns true', () => {
+    const value: Value<Person> = createValue(new Person("John"));
+    expect(value.forAll(p => p.name == "John")).to.equal(true);
+  });
+
+  it('if at least an element does not match a given predicate "forAll" returns false', () => {
+    const value: Value<Person> = createValue(new Person("John"));
+    expect(value.forAll(p => p.name == "Peter")).to.equal(false);
+  });
+
+  it('a value is contained', () => {
     const value: Value<Person> = createValue(new Person("John"));
     expect(value.contains(new Person("John"))).to.equal(true);
   });
 
-  it('checks if a value is not contained', () => {
+  it('a value is not contained', () => {
     const value: Value<Person> = createValue(new Person("John"));
     expect(value.contains(new Person("Peter"))).to.equal(false);
+  });
+
+  it('executes "forEach"', () => {
+    const value: Value<Person> = createValue(new Person("John"));
+    const action = sinon.spy();
+    value.forEach(action);
+    expect(action.calledOnce).to.equal(true);
+    expect(action.calledWith(value.get())).to.equal(true);
   });
 
 });

@@ -11,6 +11,16 @@ export abstract class Value<T> implements Iterable<T> {
         return false;
     }
 
+    forAll(predicate: (element: T) => boolean): boolean {
+        return !this.exists((x: T) => !predicate(x));
+    }
+
+    forEach(action: (element: T) => void): void {
+        for (let v of this) {
+            action(v);
+        }
+    }
+
     contains(element: T): boolean {
         return this.exists(e => deepEqual(e, element));
     }
