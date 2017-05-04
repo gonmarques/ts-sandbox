@@ -25,7 +25,19 @@ export abstract class Value<T> implements Iterable<T> {
         return this.exists(e => deepEqual(e, element));
     }
 
+    getOrElse(supplier: () => T): T;
+    getOrElse(other: T): T;
+    getOrElse(anyOther: any): T {
+        return this.isEmpty() ?
+                   anyOther instanceof Function ?
+                       anyOther() :
+                       anyOther :
+                   this.get();
+    }
+
     abstract get(): T;
+
+    abstract isEmpty(): boolean;
 
     abstract [Symbol.iterator](): Iterator<T>;
 }

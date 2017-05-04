@@ -43,9 +43,34 @@ describe('Value', () => {
     expect(action.calledWith(value.get())).to.equal(true);
   });
 
+  it('getOrElse with alternative value returns alternative value if Value is empty', () => {
+    const value: Value<Person> = createValue(new Person("John"), true);
+    const result: Person = value.getOrElse(new Person("Alternative"));
+    expect(result).to.deep.equal(new Person("Alternative"));
+  });
+
+  it('getOrElse with alternative value returns Value value if Value is not empty', () => {
+    const value: Value<Person> = createValue(new Person("John"), false);
+    const result: Person = value.getOrElse(new Person("Alternative"));
+    expect(result).to.deep.equal(new Person("John"));
+  });
+
+  it('getOrElse with alternative supplier returns alternative supplier value if Value is empty', () => {
+    const value: Value<Person> = createValue(new Person("John"), true);
+    const result: Person = value.getOrElse(() => new Person("Alternative"));
+    expect(result).to.deep.equal(new Person("Alternative"));
+  });
+
+  it('getOrElse with alternative supplier returns Value value if Value is not empty', () => {
+    const value: Value<Person> = createValue(new Person("John"), false);
+    const result: Person = value.getOrElse(() => new Person("Alternative"));
+    expect(result).to.deep.equal(new Person("John"));
+  });
+
 });
 
-function createValue(value: Person): Value<Person> {
+function createValue(value: Person, isEmpty?: boolean): Value<Person>;
+function createValue(value: Person, isEmpty: boolean = true): Value<Person> {
     let TestValue: {new(): Value<Person>} = class extends Value<Person> {
         get(): Person {
             return value;
@@ -60,6 +85,9 @@ function createValue(value: Person): Value<Person> {
                     };
                 }
             };
+        }
+        isEmpty(): boolean {
+            return isEmpty;
         }
     };
     return new TestValue();
