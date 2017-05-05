@@ -50,5 +50,11 @@ export abstract class Value<T> implements Iterable<T> {
 
     abstract isEmpty(): boolean;
 
+    abstract isSingleValued(): boolean;
+
+    abstract map<U>(mapper: (element: T) => U): Value<U>;
+
+    abstract peek(action: (element: T) => void): Value<T>;
+
     abstract [Symbol.iterator](): Iterator<T>;
 }

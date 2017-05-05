@@ -113,6 +113,15 @@ function createValue(value: Person, isEmpty: boolean = true): Value<Person> {
         isEmpty(): boolean {
             return isEmpty;
         }
+        isSingleValued() {
+            return true;
+        }
+        map<U>(mapper: (element: Person) => U): Value<U> {
+            return null;
+        }
+        peek(action: (element: Person) => void): Value<Person> {
+            return null;
+        }
     };
     return new TestValue();
 }
