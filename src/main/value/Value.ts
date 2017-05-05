@@ -42,6 +42,10 @@ export abstract class Value<T> implements Iterable<T> {
         return this.get();
     }
 
+    getOrNull(): T {
+        return this.isEmpty() ? null : this.get();
+    }
+
     abstract get(): T;
 
     abstract isEmpty(): boolean;

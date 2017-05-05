@@ -79,6 +79,18 @@ describe('Value', () => {
     expect(test).to.throw(Error, "Some Error");
   });
 
+  it('getOrNull with value defined returns value', () => {
+    const value: Value<Person> = createValue(new Person("John"), false);
+    const result: Person = value.getOrNull();
+    expect(result).to.deep.equal(new Person("John"));
+  });
+
+  it('getOrNull without value defined returns null', () => {
+    const value: Value<Person> = createValue(new Person("John"), true);
+    const result: Person = value.getOrNull();
+    expect(result).to.equal(null);
+  });
+
 });
 
 function createValue(value: Person, isEmpty?: boolean): Value<Person>;
