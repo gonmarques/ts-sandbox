@@ -67,6 +67,18 @@ describe('Value', () => {
     expect(result).to.deep.equal(new Person("John"));
   });
 
+  it('getOrElseThrow with value defined returns value', () => {
+    const value: Value<Person> = createValue(new Person("John"), false);
+    const result: Person = value.getOrElseThrow(() => new Error("Some Error"));
+    expect(result).to.deep.equal(new Person("John"));
+  });
+
+  it('getOrElseThrow without value throws the supplied error', () => {
+    const value: Value<Person> = createValue(new Person("John"), true);
+    const test = () => value.getOrElseThrow(() => new Error("Some Error"));
+    expect(test).to.throw(Error, "Some Error");
+  });
+
 });
 
 function createValue(value: Person, isEmpty?: boolean): Value<Person>;

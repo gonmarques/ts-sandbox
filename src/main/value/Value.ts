@@ -35,6 +35,13 @@ export abstract class Value<T> implements Iterable<T> {
                    this.get();
     }
 
+    getOrElseThrow<E extends Error>(supplier: () => E): T {
+        if(this.isEmpty()){
+            throw supplier();
+        }
+        return this.get();
+    }
+
     abstract get(): T;
 
     abstract isEmpty(): boolean;
