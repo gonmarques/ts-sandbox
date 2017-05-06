@@ -23,10 +23,14 @@ export abstract class Option<T> extends Value<T> {
     }
 
     peek(action: (element: T) => void): Option<T> {
-        if(!this.isEmpty()) {
+        if(this.isDefined()) {
             action(this.get());
         }
         return this;
+    }
+
+    isDefined(): boolean {
+        return !this.isEmpty();
     }
 }
 

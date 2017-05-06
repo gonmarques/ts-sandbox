@@ -49,7 +49,7 @@ describe('Option', () => {
     expect(test).to.throw(Error, "No value present");
   });
 
-  it('if value if present then is not empty', () => {
+  it('if value is present then is not empty', () => {
     const value: Option<String> = Option.of("value");
     expect(value.isEmpty()).to.equal(false);
   });
@@ -57,6 +57,16 @@ describe('Option', () => {
   it('if value is not present then is empty', () => {
     const value: Option<String> = Option.of(null);
     expect(value.isEmpty()).to.equal(true);
+  });
+
+  it('if value is present then is defined', () => {
+    const value: Option<String> = Option.of("value");
+    expect(value.isDefined()).to.equal(true);
+  });
+
+  it('if value is not present then is not defined', () => {
+    const value: Option<String> = Option.of(null);
+    expect(value.isDefined()).to.equal(false);
   });
 
   it('is not single valued', () => {
