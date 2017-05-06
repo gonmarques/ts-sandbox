@@ -48,14 +48,19 @@ describe('Option', () => {
     expect(test).to.throw(Error, "No value present");
   });
 
-  it('Option with value is not empty', () => {
+  it('if value if present then is not empty', () => {
     const value: Option<String> = Option.of("value");
     expect(value.isEmpty()).to.equal(false);
   });
 
-  it('Option without value is empty', () => {
+  it('if value is not present then is empty', () => {
     const value: Option<String> = Option.of(null);
     expect(value.isEmpty()).to.equal(true);
+  });
+
+  it('is not single valued', () => {
+    const value: Option<String> = Option.of("value");
+    expect(value.isSingleValued()).to.equal(false);
   });
 
 });
