@@ -51,6 +51,10 @@ export abstract class Option<T> extends Value<T> {
     isDefined(): boolean {
         return !this.isEmpty();
     }
+
+    getOption(): Option<T> {
+        return this;
+    }
 }
 
 export class Some<T> extends Option<T> {

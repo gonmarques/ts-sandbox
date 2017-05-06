@@ -137,6 +137,11 @@ describe('Option', () => {
     expect(value.get()).to.deep.equal(other.get());
   });
 
+  it('getOption returns Option', () => {
+    const value: Option<String> = Option.of("value");
+    const result: Option<String> = value.getOption();
+    expect(result.get()).to.equal(value.get());
+  });
 
 });
 
