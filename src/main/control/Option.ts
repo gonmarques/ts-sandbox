@@ -41,6 +41,13 @@ export abstract class Option<T> extends Value<T> {
         return this;
     }
 
+    onEmpty(action: () => void): Option<T> {
+        if(this.isEmpty()) {
+            action();
+        }
+        return this;
+    }
+
     isDefined(): boolean {
         return !this.isEmpty();
     }

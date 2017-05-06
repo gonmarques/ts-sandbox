@@ -121,6 +121,23 @@ describe('Option', () => {
     expect(value.isEmpty()).to.equal(true);
   });
 
+  it('onEmpty calls action on empty Option', () => {
+    const value: Option<String> = Option.of(null);
+    const action = sinon.spy();
+    const other: Option<String> = value.onEmpty(action);
+    expect(action.calledOnce).to.equal(true);
+    expect(other.isEmpty()).to.equal(true);
+  });
+
+  it('onEmpty doesnt call action on non empty Option', () => {
+    const value: Option<String> = Option.of("value");
+    const action = sinon.spy();
+    const other: Option<String> = value.onEmpty(action);
+    expect(action.called).to.equal(false);
+    expect(value.get()).to.deep.equal(other.get());
+  });
+
+
 });
 
 describe('Some', () => {
