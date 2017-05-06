@@ -63,6 +63,16 @@ describe('Option', () => {
     expect(value.isSingleValued()).to.equal(false);
   });
 
+  it('maps an Option with value', () => {
+    const value: Option<String> = Option.of("value");
+    expect(value.map((s: String) => s.length).get()).to.equal(5);
+  });
+
+  it('maps an Option without value', () => {
+    const value: Option<String> = Option.of(null);
+    expect(value.map((s: String) => s.length).isEmpty()).to.equal(true);
+  });
+
 });
 
 describe('Some', () => {

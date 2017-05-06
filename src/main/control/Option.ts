@@ -17,6 +17,10 @@ export abstract class Option<T> extends Value<T> {
     isSingleValued(): boolean {
         return false;
     }
+
+    map<U>(mapper: (element: T) => U): Option<U> {
+        return this.isEmpty() ? None.none() : Some.of(mapper(this.get()));
+    }
 }
 
 export class Some<T> extends Option<T> {
@@ -38,10 +42,6 @@ export class Some<T> extends Option<T> {
 
     isEmpty(): boolean {
         return false;
-    }
-
-    map<U>(mapper: (element: T) => U): Value<U> {
-        throw new Error('Method not implemented.');
     }
 
     peek(action: (element: T) => void): Value<T> {
@@ -71,10 +71,6 @@ export class None<T> extends Option<T> {
 
     isEmpty(): boolean {
         return true;
-    }
-
-    map<U>(mapper: (element: T) => U): Value<U> {
-        throw new Error('Method not implemented.');
     }
 
     peek(action: (element: T) => void): Value<T> {
