@@ -143,6 +143,18 @@ describe('Option', () => {
     expect(result.get()).to.equal(value.get());
   });
 
+  it('"flatMap" flattens Option if value is present', () => {
+    const value: Option<String> = Option.of("value");
+    const result: Option<String> = value.flatMap((v) => Some.some(v));
+    expect(value.get()).to.equal(result.get());
+  });
+
+  it('"flatMap" returns empty Option if value is not present', () => {
+    const value: Option<String> = Option.of(null);
+    const result: Option<String> = value.flatMap((v) => Some.some(v));
+    expect(result.isEmpty()).to.equal(true);
+  });
+
 });
 
 describe('Some', () => {

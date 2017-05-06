@@ -34,6 +34,10 @@ export abstract class Option<T> extends Value<T> {
         return this.isEmpty() ? None.none() : Some.of(mapper(this.get()));
     }
 
+    flatMap<U>(mapper: (element: T) => Option<U>): Option<U> {
+        return this.isEmpty() ? None.none() : mapper(this.get());
+    }
+
     peek(action: (element: T) => void): Option<T> {
         if(this.isDefined()) {
             action(this.get());
