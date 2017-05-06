@@ -1,4 +1,5 @@
 import 'mocha';
+import * as sinon from 'sinon';
 import {expect} from "chai";
 import {Option} from "../../main/control/Option"
 import {Some} from "../../main/control/Option"
@@ -71,6 +72,23 @@ describe('Option', () => {
   it('maps an Option without value', () => {
     const value: Option<String> = Option.of(null);
     expect(value.map((s: String) => s.length).isEmpty()).to.equal(true);
+  });
+
+  it('peeks an Option with value', () => {
+    const value: Option<String> = Option.of("value");
+    const action = sinon.spy();
+    const other: Option<String> = value.peek(action);
+    expect(action.calledOnce).to.equal(true);
+    expect(action.calledWith("value")).to.equal(true);
+    expect(value.get()).to.deep.equal(other.get());
+  });
+
+  it('peeks an Option without value', () => {
+    const value: Option<String> = Option.of(null);
+    const action = sinon.spy();
+    const other: Option<String> = value.peek(action);
+    expect(action.called).to.equal(false);
+    expect(other.isEmpty()).to.equal(true);
   });
 
 });

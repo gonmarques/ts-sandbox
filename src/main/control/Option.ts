@@ -21,6 +21,13 @@ export abstract class Option<T> extends Value<T> {
     map<U>(mapper: (element: T) => U): Option<U> {
         return this.isEmpty() ? None.none() : Some.of(mapper(this.get()));
     }
+
+    peek(action: (element: T) => void): Option<T> {
+        if(!this.isEmpty()) {
+            action(this.get());
+        }
+        return this;
+    }
 }
 
 export class Some<T> extends Option<T> {
@@ -42,10 +49,6 @@ export class Some<T> extends Option<T> {
 
     isEmpty(): boolean {
         return false;
-    }
-
-    peek(action: (element: T) => void): Value<T> {
-        throw new Error('Method not implemented.');
     }
 
     [Symbol.iterator](): Iterator<T> {
@@ -71,10 +74,6 @@ export class None<T> extends Option<T> {
 
     isEmpty(): boolean {
         return true;
-    }
-
-    peek(action: (element: T) => void): Value<T> {
-        throw new Error('Method not implemented.');
     }
 
     [Symbol.iterator](): Iterator<T> {
