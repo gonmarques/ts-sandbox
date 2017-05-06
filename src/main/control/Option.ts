@@ -31,18 +31,23 @@ export class Some<T> extends Option<T> {
     get(): T {
         return this.value;
     }
+
     isEmpty(): boolean {
-        throw new Error('Method not implemented.');
+        return false;
     }
+
     isSingleValued(): boolean {
         throw new Error('Method not implemented.');
     }
+
     map<U>(mapper: (element: T) => U): Value<U> {
         throw new Error('Method not implemented.');
     }
+
     peek(action: (element: T) => void): Value<T> {
         throw new Error('Method not implemented.');
     }
+
     [Symbol.iterator](): Iterator<T> {
         throw new Error('Method not implemented.');
     }
@@ -63,18 +68,23 @@ export class None<T> extends Option<T> {
     get(): T {
         throw new Error('No value present');
     }
+
     isEmpty(): boolean {
-        throw new Error('Method not implemented.');
+        return true;
     }
+
     isSingleValued(): boolean {
         throw new Error('Method not implemented.');
     }
+
     map<U>(mapper: (element: T) => U): Value<U> {
         throw new Error('Method not implemented.');
     }
+
     peek(action: (element: T) => void): Value<T> {
         throw new Error('Method not implemented.');
     }
+
     [Symbol.iterator](): Iterator<T> {
         throw new Error('Method not implemented.');
     }

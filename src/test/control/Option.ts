@@ -48,6 +48,16 @@ describe('Option', () => {
     expect(test).to.throw(Error, "No value present");
   });
 
+  it('Option with value is not empty', () => {
+    const value: Option<String> = Option.of("value");
+    expect(value.isEmpty()).to.equal(false);
+  });
+
+  it('Option without value is empty', () => {
+    const value: Option<String> = Option.of(null);
+    expect(value.isEmpty()).to.equal(true);
+  });
+
 });
 
 describe('Some', () => {
@@ -60,6 +70,11 @@ describe('Some', () => {
   it('"get" retrieves the value', () => {
     const value: Option<String> = Some.of("value");
     expect(value.get()).to.equal("value");
+  });
+
+  it('is not empty', () => {
+    const value: Option<String> = Some.of("value");
+    expect(value.isEmpty()).to.equal(false);
   });
 
 });
@@ -75,6 +90,11 @@ describe('None', () => {
     const value: Option<String> = None.none();
     const test = () => value.get();
     expect(test).to.throw(Error, "No value present");
+  });
+
+  it('is empty', () => {
+    const value: Option<String> = None.none();
+    expect(value.isEmpty()).to.equal(true);
   });
 
 });
