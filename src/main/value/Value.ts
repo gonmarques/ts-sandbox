@@ -1,4 +1,7 @@
 import deepEqual = require('deep-equal');
+import {Option} from "../control/Option";
+import {Some} from "../control/Option";
+import {None} from "../control/Option";
 
 export abstract class Value<T> implements Iterable<T> {
 
@@ -44,6 +47,10 @@ export abstract class Value<T> implements Iterable<T> {
 
     getOrNull(): T {
         return this.isEmpty() ? null : this.get();
+    }
+
+    getOption(): Option<T> {
+        return this.isEmpty() ? None.none() : Some.of(this.get());
     }
 
     abstract get(): T;

@@ -2,6 +2,9 @@ import 'mocha';
 import * as sinon from 'sinon';
 import {expect} from "chai";
 import {Value} from "../../main/value/Value"
+import {Option} from "../../main/control/Option"
+import {Some} from "../../main/control/Option"
+import {None} from "../../main/control/Option"
 
 describe('Value', () => {
 
@@ -89,6 +92,20 @@ describe('Value', () => {
     const value: Value<Person> = createValue(new Person("John"), true);
     const result: Person = value.getOrNull();
     expect(result).to.equal(null);
+  });
+
+  it('getOption returns a Some if not empty', () => {
+    const value: Value<Person> = createValue(new Person("John"), false);
+    const result: Option<Person> = value.getOption();
+    expect(result instanceof Some).to.equal(true);
+    expect(result.get()).to.deep.equal(value.get());
+  });
+
+  it('getOption returns a None if empty', () => {
+    const value: Value<Person> = createValue(new Person("John"), true);
+    const result: Option<Person> = value.getOption();
+    expect(result instanceof None).to.equal(true);
+    expect(result.isEmpty()).equal(true);
   });
 
 });
