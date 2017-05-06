@@ -101,6 +101,26 @@ describe('Option', () => {
     expect(other.isEmpty()).to.equal(true);
   });
 
+  it('"when" creates Option which value is from supplier if condition is true', () => {
+    const value: Option<String> = Option.when(true, () => "value");
+    expect(value.get()).to.equal("value");
+  });
+
+  it('"when" creates empty Option if condition is false - supplier flavour', () => {
+    const value: Option<String> = Option.when(false, () => "value");
+    expect(value.isEmpty()).to.equal(true);
+  });
+
+  it('"when" creates Option which value is passed if condition is true', () => {
+    const value: Option<String> = Option.when(true, "value");
+    expect(value.get()).to.equal("value");
+  });
+
+  it('"when" creates empty Option if condition is false - passed value flavour', () => {
+    const value: Option<String> = Option.when(false, "value");
+    expect(value.isEmpty()).to.equal(true);
+  });
+
 });
 
 describe('Some', () => {

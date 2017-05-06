@@ -14,6 +14,18 @@ export abstract class Option<T> extends Value<T> {
         return None.none();
     }
 
+    static when<T>(condition: boolean, supplier: () => T): Option<T>;
+    static when<T>(condition: boolean, supplier: T): Option<T>;
+    static when<T>(condition: boolean, supplier: any): Option<T> {
+        return condition ?
+                   Some.of(
+                       supplier instanceof Function ?
+                           supplier() :
+                           supplier
+                   ) :
+                   None.none();
+    }
+
     isSingleValued(): boolean {
         return false;
     }
