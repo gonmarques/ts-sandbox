@@ -5,6 +5,14 @@ export abstract class Option<T> extends Value<T> {
     static of<T>(value: T): Option<T> {
         return value == null ? None.none() : Some.of(value);
     }
+
+    static some<T>(value: T): Option<T> {
+        return Some.of(value);
+    }
+
+    static none(): Option<any> {
+        return None.none();
+    }
 }
 
 export class Some<T> extends Option<T> {
@@ -21,7 +29,7 @@ export class Some<T> extends Option<T> {
     }
 
     get(): T {
-        throw new Error('Method not implemented.');
+        return this.value;
     }
     isEmpty(): boolean {
         throw new Error('Method not implemented.');
@@ -42,7 +50,7 @@ export class Some<T> extends Option<T> {
 
 export class None<T> extends Option<T> {
 
-    private static INSTANCE: None<any> = new None<any>();
+    private static readonly INSTANCE: None<any> = new None<any>();
 
     private constructor(){
         super();
@@ -53,7 +61,7 @@ export class None<T> extends Option<T> {
     }
 
     get(): T {
-        throw new Error('Method not implemented.');
+        throw new Error('No value present');
     }
     isEmpty(): boolean {
         throw new Error('Method not implemented.');
