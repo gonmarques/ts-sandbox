@@ -64,6 +64,10 @@ export abstract class Option<T> extends Value<T> {
         return this.isEmpty() || predicate(this.get()) ? this : None.none();
     }
 
+    transform<U>(transformer: (option: Option<T>) => U): U {
+        return transformer(this);
+    }
+
     orElse(supplier: () => Option<T>): Option<T>;
     orElse(other: Option<T>): Option<T>;
     orElse(anyOther: any): Option<T> {

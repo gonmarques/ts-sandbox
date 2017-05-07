@@ -221,6 +221,12 @@ describe('Option', () => {
     expect(result.isEmpty()).to.equal(true);
   });
 
+  it('transforms the optional', () => {
+    const value: Option<String> = Option.of("value");
+    const result: number = value.transform((v) => v.get().length);
+    expect(result).to.equal(5);
+  });
+
 });
 
 describe('Some', () => {
