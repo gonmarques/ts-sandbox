@@ -203,6 +203,24 @@ describe('Option', () => {
     expect(value).to.equal("");
   });
 
+  it('filter Option with value - true predicate', () => {
+    const value: Option<String> = Option.of("value");
+    const result: Option<String> = value.filter((v) => v == "value");
+    expect(result.get()).to.equal("value");
+  });
+
+  it('filter Option with value - false predicate', () => {
+    const value: Option<String> = Option.of("value");
+    const result: Option<String> = value.filter((v) => v == "other");
+    expect(result.isEmpty()).to.equal(true);
+  });
+
+  it('filter empty Option', () => {
+    const value: Option<String> = Option.of(null);
+    const result: Option<String> = value.filter((v) => v == "value");
+    expect(result.isEmpty()).to.equal(true);
+  });
+
 });
 
 describe('Some', () => {

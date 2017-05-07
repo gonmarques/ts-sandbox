@@ -60,6 +60,10 @@ export abstract class Option<T> extends Value<T> {
         return this;
     }
 
+    filter(predicate: (element: T) => boolean): Option<T> {
+        return this.isEmpty() || predicate(this.get()) ? this : None.none();
+    }
+
     orElse(supplier: () => Option<T>): Option<T>;
     orElse(other: Option<T>): Option<T>;
     orElse(anyOther: any): Option<T> {
