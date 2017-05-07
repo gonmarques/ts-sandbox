@@ -155,6 +155,30 @@ describe('Option', () => {
     expect(result.isEmpty()).to.equal(true);
   });
 
+  it('orElse with alternative value returns Option with alternative value if Option is empty', () => {
+    const value: Option<String> = Option.of(null);
+    const result: Option<String> = value.orElse(Option.of("other"));
+    expect(result.get()).to.deep.equal("other");
+  });
+
+  it('orElse with alternative value returns current Option if Option is not empty', () => {
+    const value: Option<String> = Option.of("value");
+    const result: Option<String> = value.orElse(Option.of("other"));
+    expect(result.get()).to.deep.equal("value");
+  });
+
+  it('orElse with alternative supplier returns Option with alternative sulier value if Option is empty', () => {
+    const value: Option<String> = Option.of(null);
+    const result: Option<String> = value.orElse(() => Option.of("other"));
+    expect(result.get()).to.deep.equal("other");
+  });
+
+  it('orElse with alternative supplier returns current Option if Option is not empty', () => {
+    const value: Option<String> = Option.of("value");
+    const result: Option<String> = value.orElse(() => Option.of("other"));
+    expect(result.get()).to.deep.equal("value");
+  });
+
 });
 
 describe('Some', () => {

@@ -59,6 +59,16 @@ export abstract class Option<T> extends Value<T> {
     getOption(): Option<T> {
         return this;
     }
+
+    orElse(supplier: () => Option<T>): Option<T>;
+    orElse(other: Option<T>): Option<T>;
+    orElse(anyOther: any): Option<T> {
+        return this.isEmpty() ?
+                   anyOther instanceof Function ?
+                       anyOther() :
+                       anyOther :
+                   this;
+    }
 }
 
 export class Some<T> extends Option<T> {
