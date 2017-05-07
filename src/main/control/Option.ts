@@ -69,6 +69,20 @@ export abstract class Option<T> extends Value<T> {
                        anyOther :
                    this;
     }
+
+    [Symbol.iterator](): Iterator<T> {
+        const isDefined = () => this.isDefined();
+        const get = () => this.get();
+        let consumed: number = 0;
+        return {
+            next(): IteratorResult<T> {
+                return {
+                    done: isDefined() ? !!consumed++ : true,
+                    value: isDefined() ? get() : null
+                };
+            }
+        };
+    }
 }
 
 export class Some<T> extends Option<T> {
@@ -91,10 +105,6 @@ export class Some<T> extends Option<T> {
     isEmpty(): boolean {
         return false;
     }
-
-    [Symbol.iterator](): Iterator<T> {
-        throw new Error('Method not implemented.');
-    }
 }
 
 export class None<T> extends Option<T> {
@@ -115,9 +125,5 @@ export class None<T> extends Option<T> {
 
     isEmpty(): boolean {
         return true;
-    }
-
-    [Symbol.iterator](): Iterator<T> {
-        throw new Error('Method not implemented.');
     }
 }

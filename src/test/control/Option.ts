@@ -90,7 +90,7 @@ describe('Option', () => {
     const other: Option<String> = value.peek(action);
     expect(action.calledOnce).to.equal(true);
     expect(action.calledWith("value")).to.equal(true);
-    expect(value.get()).to.deep.equal(other.get());
+    expect(value.get()).to.equal(other.get());
   });
 
   it('peeks an Option without value', () => {
@@ -134,7 +134,7 @@ describe('Option', () => {
     const action = sinon.spy();
     const other: Option<String> = value.onEmpty(action);
     expect(action.called).to.equal(false);
-    expect(value.get()).to.deep.equal(other.get());
+    expect(value.get()).to.equal(other.get());
   });
 
   it('getOption returns Option', () => {
@@ -158,25 +158,49 @@ describe('Option', () => {
   it('orElse with alternative value returns Option with alternative value if Option is empty', () => {
     const value: Option<String> = Option.of(null);
     const result: Option<String> = value.orElse(Option.of("other"));
-    expect(result.get()).to.deep.equal("other");
+    expect(result.get()).to.equal("other");
   });
 
   it('orElse with alternative value returns current Option if Option is not empty', () => {
     const value: Option<String> = Option.of("value");
     const result: Option<String> = value.orElse(Option.of("other"));
-    expect(result.get()).to.deep.equal("value");
+    expect(result.get()).to.equal("value");
   });
 
   it('orElse with alternative supplier returns Option with alternative sulier value if Option is empty', () => {
     const value: Option<String> = Option.of(null);
     const result: Option<String> = value.orElse(() => Option.of("other"));
-    expect(result.get()).to.deep.equal("other");
+    expect(result.get()).to.equal("other");
   });
 
   it('orElse with alternative supplier returns current Option if Option is not empty', () => {
     const value: Option<String> = Option.of("value");
     const result: Option<String> = value.orElse(() => Option.of("other"));
-    expect(result.get()).to.deep.equal("value");
+    expect(result.get()).to.equal("value");
+  });
+
+  it('iterator of non-empty Option iterates over the Option value', () => {
+    let count = 0;
+    let value: String = "";
+    const option: Option<String> = Option.of("value");
+    for (let v of option) {
+        count++;
+        value = v;
+    }
+    expect(count).to.equal(1);
+    expect(value).to.equal("value");
+  });
+
+  it('iterator of empty Option iterates over an empty iterator', () => {
+    let count = 0;
+    let value: String = "";
+    const option: Option<String> = Option.of(null);
+    for (let v of option) {
+        count++;
+        value = v;
+    }
+    expect(count).to.equal(0);
+    expect(value).to.equal("");
   });
 
 });
